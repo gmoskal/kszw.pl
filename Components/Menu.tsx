@@ -1,6 +1,21 @@
 import styled from "styled-components";
 
-export const StyledMenu = styled.nav<{ isExpanded: boolean }>`
+type MenuProps = { isExpanded: boolean };
+export const Menu: React.FC<MenuProps> = (p) => {
+  const tabIndex = p.isExpanded ? 0 : -1;
+  return (
+    <StyledMenu aria-hidden={!p.isExpanded} {...p}>
+      <a href="/" tabIndex={tabIndex}>
+        Prawo
+      </a>
+      <a href="/" tabIndex={tabIndex}>
+        O nas
+      </a>
+    </StyledMenu>
+  );
+};
+
+const StyledMenu = styled.nav<MenuProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;

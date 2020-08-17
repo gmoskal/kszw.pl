@@ -1,9 +1,11 @@
 import * as React from "react";
 import styled from "styled-components";
-import Layout from "../layout/Layout";
-import { useOnClickOutside } from "../layout/hooks";
-import { Menu, Burger } from "../layout/Misc";
+import Layout from "../Components/Layout";
 import FocusLock from "react-focus-lock";
+
+import { useOnClickOutside } from "../utils/hooks";
+import { Burger } from "../Components/Burger";
+import { Menu } from "../Components/Menu";
 
 const Title = styled.h1`
   margin-top: -200px;
@@ -22,7 +24,6 @@ const Content = styled.div`
 const Home = () => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const node = React.useRef();
-  const menuId = "main-menu";
 
   useOnClickOutside(node, () => setIsExpanded(false));
 
@@ -33,7 +34,7 @@ const Home = () => {
           <Burger
             isExpanded={isExpanded}
             setIsExpanded={setIsExpanded}
-            aria-controls={menuId}
+            aria-controls="main-menu"
           />
           <Menu isExpanded={isExpanded} />
         </FocusLock>

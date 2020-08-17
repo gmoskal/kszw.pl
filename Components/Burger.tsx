@@ -1,6 +1,20 @@
 import styled from "styled-components";
 
-export const StyledBurger = styled.button<{ isExpanded: boolean }>`
+type BurgerProps = { isExpanded: boolean; setIsExpanded: (v: boolean) => void };
+
+export const Burger: React.FC<BurgerProps> = ({ setIsExpanded, ...p }) => (
+  <StyledBurger
+    aria-label="Toggle menu"
+    aria-expanded={p.isExpanded}
+    onClick={() => setIsExpanded(!p.isExpanded)}
+    {...p}
+  >
+    <span />
+    <span />
+  </StyledBurger>
+);
+
+const StyledBurger = styled.button<Pick<BurgerProps, "isExpanded">>`
   position: absolute;
   top: 50px;
   right: 40px;
