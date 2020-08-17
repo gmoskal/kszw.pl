@@ -1,22 +1,6 @@
 import Head from "next/head";
+import { init, ColorFn } from "../utils/colors";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { hexToHpluv, hsluvToRgb } from "hsluv";
-
-const toCSSRgb = (cs: [number, number, number]) =>
-  `rgb(${cs.map((c) => Math.round(c * 255)).join(", ")})`;
-
-export type ColorParam = 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
-type ColorFn = (v: keyof typeof colors, p: ColorParam) => string;
-
-const withLightness = (t: typeof colors): ColorFn => (v, l) => {
-  const [h, s] = hexToHpluv(t[v]);
-  return toCSSRgb(hsluvToRgb([h, s, l]));
-};
-
-const withSaturation = (t: typeof colors): ColorFn => (v, s) => {
-  const [h, _, l] = hexToHpluv(t[v]);
-  return toCSSRgb(hsluvToRgb([h, s, l]));
-};
 
 const colors = {
   bgColor: "#f2eff2",
@@ -25,11 +9,16 @@ const colors = {
   primaryHover: "#343078",
   brandColor: "#dda608",
 };
-
+type Colors = typeof colors;
 declare module "styled-components" {
   export interface DefaultTheme extends DT {}
 }
-type DT = typeof colors & { withLightness: ColorFn; withSaturation: ColorFn };
+const { withLightness, withSaturation } = init<Colors>();
+
+type DT = typeof colors & {
+  withLightness: ColorFn<Colors>;
+  withSaturation: ColorFn<Colors>;
+};
 
 export const GlobalStyle = createGlobalStyle`
 	html {

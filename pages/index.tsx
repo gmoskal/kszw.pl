@@ -46,7 +46,7 @@ const Home = () => {
           <b>Szalbot & Zieliński</b>
         </Title>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
           suspendisse ultrices gravida.
         </p>
