@@ -1,7 +1,7 @@
-# KSZW.pl static page
+# Nextjs real-life usage example
 
-This is `nextjs` source code for static page designed for polish [law firm of legal advisers](https://kszw.pl). Nextjs was used together with `typescript` and `styled-components`.
-You may also see the example of [HSLuv - human-friendly alternative to HSL](https://www.hsluv.org/) colors representation usage.
+This is `nextjs` source code for static page designed for [https://kszw.pl](https://kszw.pl) `polish law firm of legal advisers`.
+Nextjs was used together with `typescript` and `styled-components`, also [HSLuv (human-friendly alternative to HSL)](https://www.hsluv.org/) was used for a theme colors manipulations.
 
 ## Usage
 
