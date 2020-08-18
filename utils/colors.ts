@@ -13,7 +13,8 @@ export const init = <T>() => {
     return {
         withLightness: (t: T): ColorFn<T> => (v, l) => {
             const [h, s] = hexToHpluv(`${t[v]}`)
-            return rgbToHex(hsluvToRgb([h, s, l]))
+            const r = rgbToHex(hsluvToRgb([h, s, l]))
+            return r
         },
         withSaturation: (t: T): ColorFn<T> => (v, s) => {
             const [h, _, l] = hexToHpluv(`${t[v]}`)

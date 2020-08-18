@@ -1,7 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
 import Layout from "../Components/Layout"
-import FocusLock from "react-focus-lock"
 
 import { useOnClickOutside } from "../utils/hooks"
 import { Burger } from "../Components/Burger"
@@ -14,6 +13,7 @@ const Title = styled.h1`
 
 const Content = styled.div`
     max-width: 700px;
+    z-index: 1;
 `
 
 const Home = () => {
@@ -25,10 +25,8 @@ const Home = () => {
     return (
         <Layout home>
             <div ref={node as any}>
-                <FocusLock disabled={!isExpanded}>
-                    <Burger isExpanded={isExpanded} setIsExpanded={setIsExpanded} aria-controls="main-menu" />
-                    <Menu isExpanded={isExpanded} />
-                </FocusLock>
+                <Burger isExpanded={isExpanded} setIsExpanded={setIsExpanded} aria-controls="main-menu" />
+                <Menu isExpanded={isExpanded} />
             </div>
             <Content>
                 <Title>

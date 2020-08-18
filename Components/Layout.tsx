@@ -83,9 +83,10 @@ const Layout: React.FC<LayoutProps> = p => (
             <meta name="description" content="" />
             <meta name="og:title" content="Kancelaria" />
             <meta name="twitter:card" content="summary_large_image" />
-            <style>
-                {"@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap');"}
-            </style>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap"
+                rel="stylesheet"
+            />
         </Head>
 
         <ThemeProvider
