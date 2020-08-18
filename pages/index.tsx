@@ -1,8 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
-import Layout from "../Components/Layout"
-
-import { useOnClickOutside } from "../utils/hooks"
+import { Layout } from "../Components/Layout"
 import { Burger } from "../Components/Burger"
 import { Menu } from "../Components/Menu"
 
@@ -18,13 +16,10 @@ const Content = styled.div`
 
 const Home = () => {
     const [isExpanded, setIsExpanded] = React.useState(false)
-    const node = React.useRef()
-
-    useOnClickOutside(node, () => setIsExpanded(false))
 
     return (
         <Layout home>
-            <div ref={node as any}>
+            <div>
                 <Burger isExpanded={isExpanded} setIsExpanded={setIsExpanded} aria-controls="main-menu" />
                 <Menu isExpanded={isExpanded} />
             </div>

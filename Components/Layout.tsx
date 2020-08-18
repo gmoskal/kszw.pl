@@ -76,7 +76,7 @@ export const GlobalStyle = createGlobalStyle`
 
 type LayoutProps = { children: React.ReactNode; home?: boolean }
 
-const Layout: React.FC<LayoutProps> = p => (
+export const Layout: React.FC<LayoutProps> = p => (
     <>
         <Head>
             <link rel="icon" href="/favicon.ico" />
@@ -100,5 +100,3 @@ const Layout: React.FC<LayoutProps> = p => (
         </ThemeProvider>
     </>
 )
-
-export default Layout
