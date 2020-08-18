@@ -1,34 +1,11 @@
 import * as React from "react"
+import { Burger } from "Components/Burger"
+import { Menu } from "Components/Menu"
+
 import Head from "next/head"
-import { init, ColorFn } from "../utils/colors"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
-
-const colors = {
-    bgColor: "#f2eff2",
-    primaryWhite: "#f2f2f2",
-    primaryBlack: "#000",
-    primaryHover: "#343078",
-    brandColor: "#dda608"
-}
-
-export const sizes = {
-    mobileM: "375px",
-    tablet: "768px",
-    laptopL: "1440px",
-    desktop: "2560px"
-}
-
-const { withLightness, withSaturation } = init<Colors>()
-export const media = (d: keyof typeof sizes) => `@media (max-width: ${sizes[d]})`
-
-type Colors = typeof colors
-declare module "styled-components" {
-    export interface DefaultTheme extends DT {}
-}
-type DT = typeof colors & {
-    withLightness: ColorFn<Colors>
-    withSaturation: ColorFn<Colors>
-}
+import { getTheme, media } from "../utils/colors"
+// import { PostData } from "../lib/posts"
 
 export const GlobalStyle = createGlobalStyle`
 	html {
@@ -57,7 +34,7 @@ export const GlobalStyle = createGlobalStyle`
 		box-sizing: inherit;
 	}
 	p {
-		color: ${p => p.theme.withLightness("primaryBlack", 50)};
+		color: ${p => p.theme.withLightness("primaryBlack", 20)};
 		line-height: 1.5em;
 	}
 
@@ -72,31 +49,45 @@ export const GlobalStyle = createGlobalStyle`
 			font-weight: 900;
 		}
 	}
+	ul {
+		color: ${p => p.theme.withLightness("primaryBlack", 30)};
+		li {
+			margin-bottom: 2rem;
+		}
+    }
+	main {
+		max-width: 80vw;
+	}
 `
 
-type LayoutProps = { children: React.ReactNode; home?: boolean }
+type LayoutProps = { children: React.ReactNode; posts?: any[] }
 
-export const Layout: React.FC<LayoutProps> = p => (
-    <>
-        <Head>
-            <link rel="icon" href="/favicon.ico" />
-            <meta name="description" content="" />
-            <meta name="og:title" content="Kancelaria" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <link
-                href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap"
-                rel="stylesheet"
-            />
-        </Head>
+export const Layout: React.FC<LayoutProps> = p => {
+    const [isExpanded, setIsExpanded] = React.useState(false)
+    return (
+        <>
+            <Head>
+                <link rel="icon" href="/favicon.ico" />
+                <meta name="description" content="" />
+                <meta name="og:title" content="Kancelaria" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap"
+                    rel="stylesheet"
+                />
+            </Head>
 
-        <ThemeProvider
-            theme={{
-                ...colors,
-                withLightness: withLightness(colors),
-                withSaturation: withSaturation(colors)
-            }}>
-            <GlobalStyle />
-            <main>{p.children}</main>
-        </ThemeProvider>
-    </>
-)
+            <ThemeProvider theme={getTheme()}>
+                <GlobalStyle />
+                {p.posts ? (
+                    <div>
+                        <Burger isExpanded={isExpanded} setIsExpanded={setIsExpanded} aria-controls="main-menu" />
+                        <Menu isExpanded={isExpanded} posts={p.posts || []} />
+                    </div>
+                ) : null}
+
+                <main>{p.children}</main>
+            </ThemeProvider>
+        </>
+    )
+}

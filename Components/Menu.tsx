@@ -1,26 +1,27 @@
 import * as React from "react"
 import styled from "styled-components"
-import { media } from "./Layout"
+import Link from "next/link"
+import { media } from "../utils/colors"
 
-type MenuProps = { isExpanded: boolean }
-export const Menu: React.FC<MenuProps> = p => {
-    const tabIndex = p.isExpanded ? 0 : -1
-    return (
-        <StyledMenu aria-hidden={!p.isExpanded} {...p}>
-            <a href="/" tabIndex={tabIndex}>
-                Prawo
-            </a>
-            <a href="/" tabIndex={tabIndex}>
-                O nas
-            </a>
-        </StyledMenu>
-    )
-}
+type MenuProps = { isExpanded: boolean; posts: any[] }
+export const Menu: React.FC<MenuProps> = p => (
+    <StyledMenu aria-hidden={!p.isExpanded} {...p}>
+        <ul>
+            <h2>Prawo</h2>
+            {p.posts.map(pd => (
+                <li key={pd.id}>
+                    <Link href="/[id]" as={`/${pd.id}`}>
+                        <a>{pd.title}</a>
+                    </Link>
+                </li>
+            ))}
+        </ul>
+    </StyledMenu>
+)
 
 const StyledMenu = styled.nav<MenuProps>`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     background: ${({ theme }) => theme.primaryBlack};
     height: 100vh;
     border: 1rem solid white;
@@ -28,26 +29,40 @@ const StyledMenu = styled.nav<MenuProps>`
     text-align: left;
     padding: ${p => (p.isExpanded ? "2rem" : "0")};
     position: absolute;
-    top: 0;
     right: 0;
+    padding-top: 30vh;
+    top: 0;
     opacity: ${p => (p.isExpanded ? "1" : "0")};
     overflow: hidden;
     transition: all 0.3s ease-in-out;
-
-    a {
-        font-size: 2rem;
-        ${media("mobileM")} {
-            font-size: 1.2rem;
-            padding: 0.4rem 0;
+    color: ${({ theme }) => theme.primaryWhite};
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: block;
+        /* margin: 0 auto; */
+        align-self: center;
+        li {
+            margin-bottom: 0;
+            ${media("mobileM")} {
+                font-size: 1.2rem;
+                padding: 0.4rem 0;
+            }
         }
-        padding: 1rem 0;
-        text-align: center;
+    }
+    h2 {
         color: ${({ theme }) => theme.primaryWhite};
+    }
+    a {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+        color: ${({ theme }) => theme.withLightness("primaryWhite", 70)};
         text-decoration: none;
-        transition: color 0.3s linear;
 
         &:hover {
             color: ${({ theme }) => theme.primaryHover};
         }
+        transition: color 0.3s linear;
     }
 `
