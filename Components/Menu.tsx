@@ -23,7 +23,7 @@ const StyledMenu = styled.nav<MenuProps>`
     justify-content: center;
     background: ${({ theme }) => theme.primaryBlack};
     height: 100vh;
-    border: 20px solid white;
+    border: 1rem solid white;
     width: ${p => (p.isExpanded ? "100vw" : "0px")};
     text-align: left;
     padding: ${p => (p.isExpanded ? "2rem" : "0")};

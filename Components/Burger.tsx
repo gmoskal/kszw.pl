@@ -16,8 +16,8 @@ export const Burger: React.FC<BurgerProps> = ({ setIsExpanded, ...p }) => (
 
 const StyledBurger = styled.button<Pick<BurgerProps, "isExpanded">>`
     position: absolute;
-    top: 50px;
-    right: 40px;
+    top: 3rem;
+    right: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

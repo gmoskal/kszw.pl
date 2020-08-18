@@ -40,10 +40,15 @@ export const GlobalStyle = createGlobalStyle`
 		align-items: center;
 		background: ${({ theme }) => theme.primaryWhite};
 		color: ${({ theme }) => theme.primaryBlack};
-		height: 100vh;
+		min-height: 98vh;
 		text-rendering: optimizeLegibility;
 		font-family: 'Montserrat', sans-serif;
-		padding: 15px;
+		font-size: 16px;
+		${media("mobileM")} {
+        	font-size: 12px;
+		}
+		padding: 1rem;
+		
 	}
 	*,
 	*::before,
@@ -52,11 +57,20 @@ export const GlobalStyle = createGlobalStyle`
 		box-sizing: inherit;
 	}
 	p {
-		color: ${p => p.theme.withLightness("primaryBlack", 30)};
+		color: ${p => p.theme.withLightness("primaryBlack", 50)};
 		line-height: 1.5em;
+	}
+
+	h1 {
+		font-size: 4rem;
+		font-weight: 500;
 		${media("mobileM")} {
-        	font-size: 13px;
-    	}
+			font-size: 1.5rem;
+		}
+
+		b {
+			font-weight: 900;
+		}
 	}
 `
 
@@ -70,7 +84,7 @@ const Layout: React.FC<LayoutProps> = p => (
             <meta name="og:title" content="Kancelaria" />
             <meta name="twitter:card" content="summary_large_image" />
             <style>
-                {"@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;800&display=swap');"}
+                {"@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap');"}
             </style>
         </Head>
 

@@ -1,6 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
-import Layout, { media } from "../Components/Layout"
+import Layout from "../Components/Layout"
 import FocusLock from "react-focus-lock"
 
 import { useOnClickOutside } from "../utils/hooks"
@@ -10,15 +10,6 @@ import { Menu } from "../Components/Menu"
 const Title = styled.h1`
     margin-top: -200px;
     max-width: 700px;
-    font-size: 60px;
-    font-weight: 500;
-    ${media("mobileM")} {
-        font-size: 20px;
-    }
-
-    b {
-        font-weight: 900;
-    }
 `
 
 const Content = styled.div`
