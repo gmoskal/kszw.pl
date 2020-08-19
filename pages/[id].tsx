@@ -2,17 +2,18 @@ import * as React from "react"
 import Head from "next/head"
 import { GetStaticProps, GetStaticPaths } from "next"
 import { Layout } from "Components/Layout"
-import { PostData, getPostData, getAllPostIds } from "lib/files"
+import { PostData, getPostData, getAllPostIds, getMenu } from "lib/files"
+import { MenuGroup } from "../Components/Menu"
 
-export default function Post(p: PostData) {
+export default function Post(p: { post: PostData; menu: MenuGroup[] }) {
     return (
-        <Layout>
+        <Layout menu={p.menu} selectedTitle={p.post.title}>
             <Head>
-                <title>{p.title}</title>
+                <title>{p.post.title}</title>
             </Head>
             <article>
-                <h1>{p.title}</h1>
-                <div dangerouslySetInnerHTML={{ __html: p.contentHtml }} />
+                <h1>{p.post.title}</h1>
+                <div dangerouslySetInnerHTML={{ __html: p.post.contentHtml }} />
             </article>
         </Layout>
     )
@@ -21,5 +22,5 @@ export default function Post(p: PostData) {
 export const getStaticPaths: GetStaticPaths = async () => ({ paths: getAllPostIds(), fallback: false })
 
 export const getStaticProps: GetStaticProps = async ({ params }) => ({
-    props: getPostData(`${params?.id}`)
+    props: { post: getPostData(`${params?.id}`), menu: getMenu() }
 })

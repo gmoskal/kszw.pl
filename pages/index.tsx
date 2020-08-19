@@ -3,7 +3,8 @@ import styled from "styled-components"
 
 import { Layout } from "Components/Layout"
 import { GetStaticProps } from "next"
-import { getSortedPostsData, PostData } from "lib/files"
+import { getMenu } from "lib/files"
+import { MenuGroup } from "../Components/Menu"
 
 const Title = styled.h1`
     margin-top: -200px;
@@ -15,8 +16,8 @@ const Content = styled.div`
     z-index: 1;
 `
 
-const Home: React.FC<{ posts: PostData[] }> = p => (
-    <Layout posts={p.posts}>
+const Home: React.FC<{ menu: MenuGroup[] }> = p => (
+    <Layout menu={p.menu}>
         <Content>
             <Title>
                 Kancelaria Radców Prawnych
@@ -31,8 +32,6 @@ const Home: React.FC<{ posts: PostData[] }> = p => (
     </Layout>
 )
 
-export const getStaticProps: GetStaticProps = async () => ({
-    props: { posts: getSortedPostsData() }
-})
+export const getStaticProps: GetStaticProps = async () => ({ props: { menu: getMenu() } })
 
 export default Home

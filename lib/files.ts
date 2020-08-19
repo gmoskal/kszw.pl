@@ -3,6 +3,7 @@ import matter from "gray-matter"
 import remark from "remark"
 import html from "remark-html"
 import { readdirSync, readFileSync } from "fs"
+import { MenuGroup } from "Components/Menu"
 
 const postsDirectory = path.join(process.cwd(), "content/prawo")
 type PostMeta = { date: string; title: string }
@@ -26,3 +27,11 @@ export function getPostData(id: string): PostData {
     const contentHtml = processedContent.toString()
     return { id, contentHtml, ...(matterResult.data as PostMeta) }
 }
+
+export const getMenu = (): MenuGroup[] => ([
+        {
+            title: "Prawo",
+            items: getSortedPostsData().map(v => ({ title: v.title, href: "/[id]", as: `/${v.id}` }))
+        }
+    ]
+)

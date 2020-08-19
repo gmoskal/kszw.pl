@@ -1,11 +1,8 @@
 import * as React from "react"
-import { Burger } from "Components/Burger"
-import { Menu } from "Components/Menu"
-
 import Head from "next/head"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
-import { getTheme, media } from "../utils/colors"
-// import { PostData } from "../lib/posts"
+import { media, getTheme } from "../utils/colors"
+import { Menu, MenuGroup } from "./Menu"
 
 export const GlobalStyle = createGlobalStyle`
 	html {
@@ -43,6 +40,7 @@ export const GlobalStyle = createGlobalStyle`
 		font-weight: 500;
 		${media("mobileM")} {
 			font-size: 1.5rem;
+		    margin-top: .6rem;
 		}
 
 		b {
@@ -51,8 +49,14 @@ export const GlobalStyle = createGlobalStyle`
 	}
 	ul {
 		color: ${p => p.theme.withLightness("primaryBlack", 30)};
+		${media("mobileM")} {
+            padding-left: 1rem;
+            padding-top: 1.2rem;
+        }
+
 		li {
 			margin-bottom: 2rem;
+
 		}
     }
 	main {
@@ -60,34 +64,22 @@ export const GlobalStyle = createGlobalStyle`
 	}
 `
 
-type LayoutProps = { children: React.ReactNode; posts?: any[] }
-
-export const Layout: React.FC<LayoutProps> = p => {
-    const [isExpanded, setIsExpanded] = React.useState(false)
-    return (
-        <>
-            <Head>
-                <link rel="icon" href="/favicon.ico" />
-                <meta name="description" content="" />
-                <meta name="og:title" content="Kancelaria" />
-                <meta name="twitter:card" content="summary_large_image" />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap"
-                    rel="stylesheet"
-                />
-            </Head>
-
-            <ThemeProvider theme={getTheme()}>
-                <GlobalStyle />
-                {p.posts ? (
-                    <div>
-                        <Burger isExpanded={isExpanded} setIsExpanded={setIsExpanded} aria-controls="main-menu" />
-                        <Menu isExpanded={isExpanded} posts={p.posts || []} />
-                    </div>
-                ) : null}
-
-                <main>{p.children}</main>
-            </ThemeProvider>
-        </>
-    )
-}
+export const Layout: React.FC<{ children: React.ReactNode; menu?: MenuGroup[]; selectedTitle?: string }> = p => (
+    <>
+        <Head>
+            <link rel="icon" href="/favicon.ico" />
+            <meta name="description" content="" />
+            <meta name="og:title" content="Kancelaria" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <link
+                href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap"
+                rel="stylesheet"
+            />
+        </Head>
+        <ThemeProvider theme={getTheme()}>
+            <GlobalStyle />
+            {p.menu && <Menu aria-controls="main-menu" menu={p.menu} selectedTitle={p.selectedTitle} />}
+            <main>{p.children}</main>
+        </ThemeProvider>
+    </>
+)
