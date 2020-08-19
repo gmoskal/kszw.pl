@@ -4,9 +4,9 @@ date: "2020-01-02"
 ---
 Radca Prawny
 
-Tel. (+ 48) 692 455 068
+telefon: 692 455 068
 
-E-mail: l.zielinski@kszw.pl
+email: l.zielinski@kszw.pl
 
 Języki: Francuski, Angielski
 
