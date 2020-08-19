@@ -17,7 +17,7 @@ const Content = styled.div`
 `
 
 const Home: React.FC<{ menu: MenuGroup[] }> = p => (
-    <Layout menu={p.menu}>
+    <Layout menu={p.menu} selectedTitle="Home">
         <Content>
             <Title>
                 Kancelaria Radców Prawnych
@@ -25,8 +25,10 @@ const Home: React.FC<{ menu: MenuGroup[] }> = p => (
                 <b>Szalbot & Zieliński</b>
             </Title>
             <p>
-                Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.
+                Kancelaria Radców Prawnych <b>Szalbot & Zieliński</b> jest firmą prawniczą świadczącą profesjonalne
+                usługi prawne, doradcze oraz szkoleniowe. Naszymi podstawowymi kierunkami działań jest świadczenie
+                bieżącej pomocy prawnej polskim i zagranicznym podmiotom gospodarczym w zakresie: transportu, spedycji,
+                logistyki (TSL) oraz obsługi korporacyjnej spółek prawa handlowego.
             </p>
         </Content>
     </Layout>

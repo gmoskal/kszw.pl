@@ -6,15 +6,13 @@ import { media } from "../utils/colors"
 type MenuItem = { href: string; as?: string; title: string }
 export type MenuGroup = { title: string; items: Array<MenuItem> }
 
-const staticMenu: MenuGroup = { title: "Kancelaria", items: [{ href: "/", title: "Home" }] }
-
 type MenuProps = { menu: MenuGroup[]; selectedTitle?: string }
 export const Menu: React.FC<MenuProps> = p => {
     const [isExpanded, setIsExpanded] = React.useState(false)
     return (
         <div>
             <StyledMenu aria-hidden={!isExpanded} isExpanded={isExpanded}>
-                {[staticMenu, ...p.menu].map((g, i) => (
+                {p.menu.map((g, i) => (
                     <ul key={i}>
                         <h2>{g.title}</h2>
                         {(g.items || []).map((item, i2) => (
