@@ -6,41 +6,35 @@ import { media } from "../utils/colors"
 type MenuItem = { href: string; as?: string; title: string }
 export type MenuGroup = { title: string; items: Array<MenuItem> }
 
-type MenuProps = { menu: MenuGroup[]; selectedTitle?: string }
-export const Menu: React.FC<MenuProps> = p => {
-    const [isExpanded, setIsExpanded] = React.useState(false)
-    return (
-        <div>
-            <StyledMenu aria-hidden={!isExpanded} isExpanded={isExpanded}>
-                {p.menu.map((g, i) => (
-                    <ul key={i}>
-                        <h2>{g.title}</h2>
-                        {(g.items || []).map((item, i2) => (
-                            <li key={`${i}-${i2}`}>
-                                <Link href={item.href} as={item.as}>
-                                    <A
-                                        isExpanded={isExpanded}
-                                        isSelected={p.selectedTitle === item.title}
-                                        onClick={() => setTimeout(() => setIsExpanded(false), 100)}>
-                                        {item.title}
-                                    </A>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                ))}
-            </StyledMenu>
-            <StyledBurger
-                aria-label="Toggle menu"
-                aria-expanded={isExpanded}
-                onClick={() => setIsExpanded(!isExpanded)}
-                isExpanded={isExpanded}>
-                <span />
-                <span />
-            </StyledBurger>
-        </div>
-    )
-}
+type MenuProps = { menu: MenuGroup[]; selectedTitle?: string; isExpanded: boolean; setIsExpanded: (v: boolean) => void }
+export const Menu: React.FC<MenuProps> = ({ isExpanded, setIsExpanded, ...p }) => (
+    <div>
+        <StyledMenu aria-hidden={!isExpanded} isExpanded={isExpanded}>
+            {p.menu.map((g, i) => (
+                <ul key={i}>
+                    <h2>{g.title}</h2>
+                    {(g.items || []).map((item, i2) => (
+                        <li key={`${i}-${i2}`}>
+                            <Link href={item.href} as={item.as}>
+                                <A isExpanded={isExpanded} isSelected={p.selectedTitle === item.title}>
+                                    {item.title}
+                                </A>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            ))}
+        </StyledMenu>
+        <StyledBurger
+            aria-label="Toggle menu"
+            aria-expanded={isExpanded}
+            onClick={() => setIsExpanded(!isExpanded)}
+            isExpanded={isExpanded}>
+            <span />
+            <span />
+        </StyledBurger>
+    </div>
+)
 
 const A = styled.a<{ isSelected: boolean; isExpanded: boolean }>`
     transition: color 0.3s linear;
@@ -65,28 +59,38 @@ const StyledMenu = styled.nav<{ isExpanded: boolean }>`
     display: flex;
     flex-direction: column;
     background: ${({ theme }) => theme.primaryBlack};
-    height: 100vh;
-    border: 1rem solid white;
-    width: ${p => (p.isExpanded ? "100vw" : "0px")};
+    height: calc(100vh - 2rem);
+    border: 1rem solid transparent;
+    margin-top: 1rem;
+
+    width: ${p => (p.isExpanded ? "100%" : "0px")};
+    margin-right: ${p => (p.isExpanded ? "1rem" : "-500px")};
+    max-width: 500px;
     text-align: left;
-    padding: ${p => (p.isExpanded ? "2rem" : "0")};
+    padding: 2rem;
     position: fixed;
     right: 0;
     padding-top: 30vh;
-    ${media("mobileM")} {
-        padding-top: 5vh;
-        padding-left: ${p => (p.isExpanded ? "8vw" : "0")};
-        border: 0.5rem solid white;
-        border-width: ${p => (p.isExpanded ? ".5rem" : ".5rem")};
-        right: ${p => (p.isExpanded ? 0 : "-2rem")};
-    }
     top: 0;
     overflow: hidden;
-    transition: all 0.4s ease-in-out;
-    color: ${({ theme }) => theme.primaryWhite};
-    padding-left: ${p => (p.isExpanded ? "20vw" : "0")};
+    transition: all 0.3s ease-in-out;
+    color: ${p => (p.isExpanded ? p.theme.primaryWhite : "transparent")};
+    padding-left: ${p => (p.isExpanded ? "4rem" : "0")};
     border-left-width: ${p => (p.isExpanded ? "1rem" : "0")};
     border-right-width: ${p => (p.isExpanded ? "1rem" : "0")};
+
+    ${media("mobileM")} {
+        height: 110vh;
+        margin-top: 0;
+        margin-right: ${p => (p.isExpanded ? "0rem" : "-500px")};
+        max-width: 110vw;
+        width: 110vw;
+        padding-left: ${p => (p.isExpanded ? "18vw" : "0")};
+        border: 0.5rem solid transparent;
+        border-width: ${p => (p.isExpanded ? ".5rem" : ".5rem")};
+        right: ${p => (p.isExpanded ? 0 : "-2rem")};
+        border: none;
+    }
     ul {
         list-style: none;
         padding: 0;

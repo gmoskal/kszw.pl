@@ -1,6 +1,6 @@
 import * as React from "react"
 import Head from "next/head"
-import { createGlobalStyle, ThemeProvider } from "styled-components"
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components"
 import { media, getTheme } from "../utils/colors"
 import { Menu, MenuGroup } from "./Menu"
 
@@ -10,7 +10,6 @@ export const GlobalStyle = createGlobalStyle`
 	}
 	body {
 		display: flex;
-		justify-content: center;
 		align-items: center;
 		background: ${({ theme }) => theme.primaryWhite};
 		color: ${({ theme }) => theme.primaryBlack};
@@ -18,10 +17,11 @@ export const GlobalStyle = createGlobalStyle`
 		text-rendering: optimizeLegibility;
 		font-family: 'Montserrat', sans-serif;
 		font-size: 16px;
+		background: url(/marble.jpg) no-repeat center center fixed;
+  		background-size: cover;
 		${media("mobileM")} {
         	font-size: 12px;
 		}
-		padding: 1rem;
 		
 	}
 	*,
@@ -59,27 +59,51 @@ export const GlobalStyle = createGlobalStyle`
 
 		}
     }
-	main {
-		max-width: 80vw;
+	#__next {
+		 width:100%;
 	}
 `
+const Main = styled.main<{ isExpanded: boolean }>`
+    transition: all 0.4s ease-in-out;
+    width: ${p => (p.isExpanded ? `calc(100vw - 600px)` : "100vw")};
+    padding: 4rem;
+    ${media("mobileM")} {
+        width: 100vw;
+        padding: 1rem;
+    }
+`
 
-export const Layout: React.FC<{ children: React.ReactNode; menu?: MenuGroup[]; selectedTitle?: string }> = p => (
-    <>
-        <Head>
-            <link rel="icon" href="/favicon.ico" />
-            <meta name="description" content="" />
-            <meta name="og:title" content="Kancelaria" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <link
-                href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap"
-                rel="stylesheet"
-            />
-        </Head>
-        <ThemeProvider theme={getTheme()}>
-            <GlobalStyle />
-            {p.menu && <Menu aria-controls="main-menu" menu={p.menu} selectedTitle={p.selectedTitle} />}
-            <main>{p.children}</main>
-        </ThemeProvider>
-    </>
-)
+export const Layout: React.FC<{ children: React.ReactNode; menu?: MenuGroup[]; selectedTitle?: string }> = p => {
+    const [isExpanded, setIsExpanded] = React.useState(true)
+
+    return (
+        <>
+            <Head>
+                <link rel="icon" href="/favicon.ico" />
+                <meta name="description" content="" />
+                <meta name="og:title" content="Kancelaria" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;900&display=swap"
+                    rel="stylesheet"
+                />
+            </Head>
+            <ThemeProvider theme={getTheme()}>
+                <GlobalStyle />
+                {p.menu && (
+                    <Menu
+                        aria-controls="main-menu"
+                        menu={p.menu}
+                        selectedTitle={p.selectedTitle}
+                        setIsExpanded={setIsExpanded}
+                        isExpanded={isExpanded}
+                    />
+                )}
+                <Main isExpanded={isExpanded}>
+                    <div style={{ maxWidth: "700px", margin: "0 auto" }}>{p.children}</div>
+                    <div style={{ display: "none" }}>{isExpanded + ""}</div>
+                </Main>
+            </ThemeProvider>
+        </>
+    )
+}
