@@ -6,7 +6,7 @@ Radca prawny
 
 telefon: 604 293 985
 
-email: d.szalbot@kszw.pl
+email: daniel.szalbot@iskancelaria.pl
 
 absolwent Wydziału Prawa, Administracji i Ekonomii Uniwersytetu Wrocławskiego.
 
